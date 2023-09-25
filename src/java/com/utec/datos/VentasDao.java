@@ -160,5 +160,23 @@ public class VentasDao {
         }catch(SQLException ex){
         }
         return rows;
-    }  
-}//Fin del metodo
+    }
+    public int EliminarVenta(Ventas ventas){
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    int rows = 0;
+
+    try{
+        conn = Conexion.conectarse();
+        stmt = conn.prepareStatement(SQL_DELETE);
+        stmt.setInt(1,ventas.getIdVenta());
+
+        rows =stmt.executeUpdate();
+    }catch(SQLException ex){
+        ex.printStackTrace(System.out);
+    }finally{
+        Conexion.close(stmt);
+        Conexion.close(conn);
+    }
+}  
+}
