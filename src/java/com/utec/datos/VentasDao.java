@@ -1,6 +1,8 @@
 package com.utec.datos;
 
-import com.utec.modelo.Venta;
+import com.utec.modelo.Productos;
+import com.utec.modelo.Ventas;
+import com.utec.modelo.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,8 +27,8 @@ public class VentasDao {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Ventas venta = new Venta();
-        Productos producto = new Producto();
+        Ventas venta = new Ventas();
+        Productos producto = new Productos();
         Cliente cliente = new Cliente();
         List<Ventas> listVenta = new ArrayList<>();
 
@@ -53,7 +55,7 @@ public class VentasDao {
                 producto.setProducto(rs.getString("Producto"));
 
                 //colocar en la venta los datos del producto
-                venta.setProducto(producto);
+                venta.setProductos(producto);
                 
                 listVenta.add(venta);
             }
@@ -64,7 +66,7 @@ public class VentasDao {
             Conexion.close(stmt);
             Conexion.close(conn);
         }
-        return clientes;
+        return listVenta;
     }
 
     // Método para buscar una venta en particular
@@ -72,8 +74,7 @@ public class VentasDao {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Ventas venta = new Venta();
-        Productos producto = new Producto();
+        Productos producto = new Productos();
         Cliente cliente = new Cliente();
         try {
             conn = Conexion.conectarse();
@@ -101,7 +102,7 @@ public class VentasDao {
                 producto.setIdProducto(rs.getInt("IdProducto"));
 
                 //colocar en la venta los datos del producto
-                venta.setProducto(producto);
+                venta.setProductos(producto);
 
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
@@ -110,7 +111,7 @@ public class VentasDao {
             Conexion.close(stmt);
             Conexion.close(conn);
         }
-        return cliente;
+        return venta;
     }
 
     //Metodo para insertar una nueva venta
@@ -134,6 +135,8 @@ public class VentasDao {
     public int ModificarVenta(Ventas ventas){
         Connection conn = null;
         PreparedStatement stmt = null;
+        Cliente cliente = ventas.getCliente();
+        Productos producto = ventas.getProductos();
         int rows = 0;
         //Realizamos el procedimiento
         try{
@@ -141,14 +144,14 @@ public class VentasDao {
             stmt = conn.prepareStatement(SQL_UPDATE);
 
             // Multiplicar cantidad por precioProducto para obtener el monto de la venta
-        float totalVenta = ventas.getCantidad() * ventas.getPrecioProd();
+        double totalVenta = ventas.getCantidad() * ventas.getPrecioProd();
         
-            stmt.setInt(1,ventas.getIdCliente);
-            stmt.setInt(2,ventas.getProductos);
-            stmt.setInt(3,ventas.getCantidad);
-            stmt.setInt(4,ventas.getPrecioProd);
-            stmt.setfloat(5,ventas.getTotalVenta);
-            stmt.setInt(6,ventas.getIdVenta);//Dato que vamos a seleccionar al momento de modifcar
+            stmt.setInt(1,cliente.getIdCliente());
+            stmt.setInt(2,producto.getIdProducto());
+            stmt.setInt(3,ventas.getCantidad());
+            stmt.setDouble(4,ventas.getPrecioProd());
+            stmt.setDouble(5,ventas.getTotalVenta());
+            stmt.setInt(6,ventas.getIdVenta());//Dato que vamos a seleccionar al momento de modifcar
 
             //Creamos la operacion a realizar 
             //la cantidad por el precio venta el
