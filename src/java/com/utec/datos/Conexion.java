@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class Conexion {
     // Variables a utilizar
-    private static final String USUARIO = "prograIV";
-    private static final String PASS = "prograIV";
-    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=GestionClientes;encrypt=true; trustServerCertificate=true";
+    private static final String USUARIO = "root";
+    private static final String PASS = "";
+    private static final String URL = "jdbc:mysql://localhost:3307/GestionClientes";
     // variable para gestionar la conexion
     private static Connection conexion = null;
     
@@ -18,7 +18,7 @@ public class Conexion {
     public static Connection conectarse(){
         try{
             // cargar el driver para la conexion
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             
             // Obtener la conexion a la BD
             conexion = DriverManager.getConnection(URL, USUARIO, PASS);
