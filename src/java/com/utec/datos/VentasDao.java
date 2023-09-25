@@ -161,7 +161,7 @@ public class VentasDao {
         }
         return rows;
     }
-    public int EliminarVenta(Ventas ventas){
+    public void EliminarVenta(Ventas ventas){
     Connection conn = null;
     PreparedStatement stmt = null;
     int rows = 0;
@@ -178,5 +178,5 @@ public class VentasDao {
         Conexion.close(stmt);
         Conexion.close(conn);
     }
-}  
+} 
 }
