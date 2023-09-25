@@ -5,7 +5,6 @@
 package com.utec.modelo;
 
 import java.sql.Date;
-import java.util.List;
 
 /**
  *
@@ -17,8 +16,8 @@ public class Ventas {
     private double PrecioProd;
     private double TotalVenta;
     private Date Fecha;
-    private List<Cliente> cliente;
-    private List<Productos> productos;
+    private Cliente cliente;
+    private Productos productos;
 
     public int getIdVenta() {
         return IdVenta;
@@ -60,19 +59,19 @@ public class Ventas {
         this.Fecha = Fecha;
     }
 
-    public List<Cliente> getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(List<Cliente> cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    public List<Productos> getProductos() {
+    public Productos getProductos() {
         return productos;
     }
 
-    public void setProductos(List<Productos> productos) {
+    public void setProductos(Productos productos) {
         this.productos = productos;
     }
     
