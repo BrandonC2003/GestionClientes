@@ -129,7 +129,7 @@ public class VentasDao {
             ex.printStackTrace(System.out);
         }
     }
-
+//Este metodo ya esta finalizado
     //Metodo para modificar ventas  
     public int ModificarVenta(Ventas ventas){
         Connection conn = null;
