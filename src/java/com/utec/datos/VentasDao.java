@@ -27,9 +27,9 @@ public class VentasDao {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Ventas venta = new Ventas();
-        Productos producto = new Productos();
-        Cliente cliente = new Cliente();
+        Ventas venta = null;
+        Productos producto = null;
+        Cliente cliente = null;
         List<Ventas> listVenta = new ArrayList<>();
 
         try {
@@ -37,6 +37,9 @@ public class VentasDao {
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
+                venta = new Ventas();
+                producto = new Productos();
+                cliente = new Cliente();
                 //recuperar datos de las ventas
                 venta.setIdVenta(rs.getInt("IdVenta"));
                 venta.setCantidad(rs.getInt("Cantidad"));
@@ -115,7 +118,7 @@ public class VentasDao {
     }
 
     //Metodo para insertar una nueva venta
-    public void insertarVenta(Ventas venta){
+    public boolean insertarVenta(Ventas venta){
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -125,9 +128,10 @@ public class VentasDao {
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
 
-
+            return true;
         }catch(SQLException ex){
             ex.printStackTrace(System.out);
+            return false;
         }
     }
 //Este metodo ya esta finalizado

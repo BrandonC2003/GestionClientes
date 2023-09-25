@@ -4,8 +4,10 @@
  */
 package com.utec.controlador;
 
+import com.utec.datos.VentasDao;
+import com.utec.modelo.Ventas;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,7 +46,24 @@ public class SvVentas extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String accion = request.getParameter("accion");
+        
+        switch(accion){
+            case "listar":
+                 List<Ventas> clientes = new VentasDao().listar();
+                request.setAttribute("ventas", clientes);
+                request.getRequestDispatcher("ventas/listar.jsp").forward(request, response);
+                break;
+            case "agregar":
+                request.getRequestDispatcher("ventas/agregar.jsp").forward(request,response);
+                break;
+            case "modificar":
+                request.getRequestDispatcher("ventas/modificar.jsp").forward(request,response);
+                break;
+            default:
+                request.getRequestDispatcher("error.jsp").forward(request,response);
+                break;
+        }
     }
 
     /**
@@ -61,15 +80,15 @@ public class SvVentas extends HttpServlet {
         String accion = request.getParameter("accion");
         
         switch(accion){
-            case "listar":
-                break;
             case "agregar":
+                
+                response.sendRedirect("SvVentas?accion=listar");
                 break;
             case "modificar":
-                break;
-            case "eliminar":
+                request.getRequestDispatcher("ventas/listar.jsp").forward(request,response);
                 break;
             default:
+                request.getRequestDispatcher("error.jsp").forward(request,response);
                 break;
         }
     }
