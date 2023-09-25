@@ -12,7 +12,7 @@ public class VentasDao {
     // Definimos variables donde almacenaremos los query para realizar CRUD
     private static final String SQL_SELECT = "SELECT v.IdVenta, c.Nombres,c.Apellidos, p.Producto, v.Cantidad, v.PrecioProd, v.TotalVenta, v.Fecha FROM ventas v INNER JOIN productos p on p.IdProducto=v.IdProducto INNER JOIN cliente c on c.IdCliente = v.IdCliente";
 
-    private static final String SQL_SELECT_BY_ID = "SELECT IdVenta, IdCliente, IdProducto, Cantidad, PrecioProd, TotalVenta, Fecha WHERE IdVenta = ?";
+    private static final String SQL_SELECT_BY_ID = "SELECT IdVenta, IdCliente, IdProducto, Cantidad, PrecioProd, TotalVenta, Fecha FROM ventas WHERE IdVenta = ?";
 
     private static final String SQL_INSERT = "INSERT INTO Cliente(Nombres, Apellidos, Email, Telefono, Saldo) VALUES(?, ?, ?, ?, ?)";
 
@@ -72,25 +72,36 @@ public class VentasDao {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        Ventas venta = new Venta();
+        Productos producto = new Producto();
+        Cliente cliente = new Cliente();
         try {
             conn = Conexion.conectarse();
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
-            stmt.setInt(1, cliente.getIdCliente());
+            stmt.setInt(1, venta.getIdVenta());
             rs = stmt.executeQuery();
             //rs.absolute(1);//nos posicionamos en el primer registro devuelto
             rs.next();
 
-            String nombre = rs.getString("Nombres");
-            String apellido = rs.getString("Apellidos");
-            String email = rs.getString("Email");
-            String telefono = rs.getString("Telefono");
-            float saldo = rs.getFloat("Saldo");
+            //recuperar datos de la consulta
+            //recuperar datos de las ventas
+                venta.setIdVenta(rs.getInt("IdVenta"));
+                venta.setCantidad(rs.getInt("Cantidad"));
+                venta.setPrecioProd(rs.getDouble("PrecioProd"));
+                venta.setTotalVenta(rs.getDouble("TotalVenta"));
+                venta.setFecha(rs.getDate("Fecha"));
+               
+                //Datos del cliente.
+                cliente.setIdCliente(rs.getInt("IdCliente"));
+               
+               //colocar en la venta los datos del cliente
+                venta.setCliente(cliente);
 
-            cliente.setNombres(nombre);
-            cliente.setApellidos(apellido);
-            cliente.setEmail(email);
-            cliente.setTelefono(telefono);
-            cliente.setSaldo(saldo);
+                //recuperar datos del producto
+                producto.setIdProducto(rs.getInt("IdProducto"));
+
+                //colocar en la venta los datos del producto
+                venta.setProducto(producto);
 
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
@@ -102,6 +113,23 @@ public class VentasDao {
         return cliente;
     }
 
+    //Metodo para insertar una nueva venta
+    public void insertarVenta(Ventas venta){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try{
+            conn = Conexion.conectarse();
+            stmt = conn.prepareStatement(SQL_SELECT);
+            rs = stmt.executeQuery();
+
+
+        }catch(SQLException ex){
+            ex.printStackTrace(System.out);
+        }
+    }
+
     //Metodo para modificar ventas  
     public int ModificarVenta(Ventas ventas){
         Connection conn = null;
@@ -111,6 +139,10 @@ public class VentasDao {
         try{
             conn = Conexion.conectarse();
             stmt = conn.prepareStatement(SQL_UPDATE);
+
+            // Multiplicar cantidad por precioProducto para obtener el monto de la venta
+        float totalVenta = ventas.getCantidad() * ventas.getPrecioProd();
+        
             stmt.setInt(1,ventas.getIdCliente);
             stmt.setInt(2,ventas.getProductos);
             stmt.setInt(3,ventas.getCantidad);
@@ -118,8 +150,12 @@ public class VentasDao {
             stmt.setfloat(5,ventas.getTotalVenta);
             stmt.setInt(6,ventas.getIdVenta);//Dato que vamos a seleccionar al momento de modifcar
 
+            //Creamos la operacion a realizar 
+            //la cantidad por el precio venta el
+            //cual sera el monto total
             
         }catch(SQLException ex){
         }
+        return rows;
     }  
 }
