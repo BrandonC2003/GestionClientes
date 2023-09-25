@@ -58,7 +58,20 @@ public class SvVentas extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String accion = request.getParameter("accion");
+        
+        switch(accion){
+            case "listar":
+                break;
+            case "agregar":
+                break;
+            case "modificar":
+                break;
+            case "eliminar":
+                break;
+            default:
+                break;
+        }
     }
 
     /**
