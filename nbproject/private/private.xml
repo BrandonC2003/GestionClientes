@@ -1,12 +1,14 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Cristian%20De%20Paz/Documents/NetBeansProjects/GestionClientes/web/index.jsp</file>
-            <file>file:/C:/Users/Cristian%20De%20Paz/Documents/NetBeansProjects/GestionClientes/src/java/com/utec/controlador/SvProductos.java</file>
-            <file>file:/C:/Users/Cristian%20De%20Paz/Documents/NetBeansProjects/GestionClientes/src/java/com/utec/datos/Conexion.java</file>
-            <file>file:/C:/Users/Cristian%20De%20Paz/Documents/NetBeansProjects/GestionClientes/src/java/com/utec/controlador/SvClientes.java</file>
+            <file>file:/C:/Users/brand/Documents/GestionClientesU/src/java/com/utec/controlador/SvVentas.java</file>
+            <file>file:/C:/Users/brand/Documents/GestionClientesU/web/clientes/listar.jsp</file>
+            <file>file:/C:/Users/brand/Documents/GestionClientesU/src/java/com/utec/datos/Conexion.java</file>
+            <file>file:/C:/Users/brand/Documents/GestionClientesU/src/java/com/utec/controlador/SvClientes.java</file>
         </group>
     </open-files>
 </project-private>
+>>>>>>> 85e9c4df9f7a134f4cca8b12cb2c1c7c9c2f40b3

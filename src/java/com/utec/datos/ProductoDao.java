@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ProductoDao {
     
-    private static final String SQL_SELECT = "SELECT IdProducto, Producto, Tipo, Cantidad, Precio FROM productos";
+    private static final String SQL_SELECT = "SELECT p.IdProducto, p.Producto, p.Tipo, p.Cantidad, p.Precio FROM productos";
 
     private static final String SQL_SELECT_BY_ID = "SELECT IdProducto, Producto, Tipo, Cantidad, Precio FROM productos WHERE IdProducto = ?";
 
@@ -33,6 +33,7 @@ public class ProductoDao {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         Productos producto = null;        
+        Cliente cliente = null;
         List<Productos> listProducto = new ArrayList<>();
 
         try {
@@ -41,13 +42,26 @@ public class ProductoDao {
             rs = stmt.executeQuery();
             while (rs.next()) {                
                 producto = new Productos();
-              
+                cliente = new Cliente();
                 //recuperar datos de las ventas
                 producto.setIdProducto(rs.getInt("IdProducto"));
                 producto.setProducto(rs.getString("Producto"));
-                producto.setTipo(rs.getString("Tipo"));
                 producto.setCantidad(rs.getInt("Cantidad"));
-                producto.setPrecio(rs.getDouble("Precio"));   
+                producto.setPrecio(rs.getDouble("Precio"));
+                producto.setTipo(rs.getString("Tipo"));                
+               
+                //Datos del cliente.
+                cliente.setNombres(rs.getString("Nombres"));
+                cliente.setApellidos(rs.getString("Apellidos"));
+               
+               //colocar en la venta los datos del cliente
+                //producto.setCliente(cliente);
+
+                //recuperar datos del producto
+                producto.setProducto(rs.getString("Producto"));
+
+                //colocar en la venta los datos del producto
+                //producto.setProducto(producto);
                 
                 listProducto.add(producto);
             }
@@ -66,7 +80,8 @@ public class ProductoDao {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;       
-                try {
+        Cliente cliente = new Cliente();
+        try {
             conn = Conexion.conectarse();
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
             stmt.setInt(1, producto.getIdProducto());
@@ -78,10 +93,17 @@ public class ProductoDao {
             
                 producto.setIdProducto(rs.getInt("IdProducto"));
                 producto.setProducto(rs.getString("Producto"));
-                 producto.setTipo(rs.getString("Tipo")); 
                 producto.setCantidad(rs.getInt("Cantidad"));
-                producto.setPrecio(rs.getDouble("Precio"));           
+                producto.setPrecio(rs.getDouble("Precio"));
+                producto.setTipo(rs.getString("Tipo"));                 
+             
                
+                //Datos del cliente.
+                cliente.setIdCliente(rs.getInt("IdCliente"));
+               
+               //colocar en la venta los datos del cliente
+                //venta.setCliente(cliente);
+
                 //recuperar datos del producto
                 producto.setIdProducto(rs.getInt("IdProducto"));
 
@@ -128,15 +150,14 @@ public class ProductoDao {
             stmt = conn.prepareStatement(SQL_UPDATE);
 
             // Multiplicar cantidad por precioProducto para obtener el monto de la venta
-        //double totalProducto = producto.getCantidad() * producto.getPrecio();
+        double totalProducto = producto.getCantidad() * producto.getPrecio();
         
             
             stmt.setInt(1,producto.getIdProducto());//Dato que vamos a seleccionar al momento de modifcar
             stmt.setString(2,producto.getProducto());
-            stmt.setString(3,producto.getTipo());
-            stmt.setInt(4,producto.getCantidad());
-            stmt.setDouble(5,producto.getPrecio());
-                       
+            stmt.setInt(3,producto.getCantidad());
+            stmt.setDouble(4,producto.getPrecio());
+            stmt.setString(5,producto.getTipo());            
 
             //Creamos la operacion a realizar 
             //la cantidad por el precio venta el
