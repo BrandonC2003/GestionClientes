@@ -126,6 +126,7 @@ public class VentasDao {
         Productos producto = venta.getProductos();
         Cliente cliente = venta.getCliente();
         
+        Productos producto2 = new Productos();
         try{
             conn = Conexion.conectarse();
             stmt = conn.prepareStatement(SQL_INSERT);
