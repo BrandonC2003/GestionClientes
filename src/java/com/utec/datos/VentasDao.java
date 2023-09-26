@@ -12,11 +12,11 @@ import java.util.List;
 
 public class VentasDao {
     // Definimos variables donde almacenaremos los query para realizar CRUD
-    private static final String SQL_SELECT = "SELECT v.IdVenta, c.Nombres,c.Apellidos, p.Producto, v.Cantidad, v.PrecioProd, v.TotalVenta, v.Fecha FROM ventas v INNER JOIN productos p on p.IdProducto=v.IdProducto INNER JOIN cliente c on c.IdCliente = v.IdCliente";
+    private static final String SQL_SELECT = "SELECT v.IdVenta, c.Nombre,c.Apellido, p.Producto, v.Cantidad, v.PrecioProd, v.TotalVenta, v.Fecha FROM ventas v INNER JOIN productos p on p.IdProducto=v.IdProducto INNER JOIN cliente c on c.IdCliente = v.IdCliente";
 
     private static final String SQL_SELECT_BY_ID = "SELECT IdVenta, IdCliente, IdProducto, Cantidad, PrecioProd, TotalVenta, Fecha FROM ventas WHERE IdVenta = ?";
 
-    private static final String SQL_INSERT = "INSERT INTO Cliente(Nombres, Apellidos, Email, Telefono, Saldo) VALUES(?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO ventas(IdCliente, IdProducto, Cantidad, PrecioProd, TotalVenta, Fecha) VALUES(?, ?, ?, ?, ?, NOW())";
 
     private static final String SQL_UPDATE = "UPDATE ventas SET IdCliente=?, IdProducto=?, Cantidad=?, PrecioProd=?, TotalVenta=? WHERE IdVenta=?";
 
@@ -48,8 +48,8 @@ public class VentasDao {
                 venta.setFecha(rs.getDate("Fecha"));
                
                 //Datos del cliente.
-                cliente.setNombres(rs.getString("Nombres"));
-                cliente.setApellidos(rs.getString("Apellidos"));
+                cliente.setNombres(rs.getString("Nombre"));
+                cliente.setApellidos(rs.getString("Apellido"));
                
                //colocar en la venta los datos del cliente
                 venta.setCliente(cliente);
@@ -118,25 +118,33 @@ public class VentasDao {
     }
 
     //Metodo para insertar una nueva venta
-    public boolean insertarVenta(Ventas venta){
+    public boolean insertarVenta(Ventas venta, String errorMessage){
+        errorMessage=null;
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
+        Productos producto = venta.getProductos();
+        Cliente cliente = venta.getCliente();
+        
         try{
             conn = Conexion.conectarse();
-            stmt = conn.prepareStatement(SQL_SELECT);
+            stmt = conn.prepareStatement(SQL_INSERT);
+            stmt.setInt(1, cliente.getIdCliente());
+            stmt.setInt(2, producto.getIdProducto());
+            stmt.setInt(3, venta.getCantidad());
+            stmt.setDouble(4, venta.getPrecioProd());
+            stmt.setDouble(5,venta.getTotalVenta());
             rs = stmt.executeQuery();
-
+            
             return true;
         }catch(SQLException ex){
-            ex.printStackTrace(System.out);
+            errorMessage=ex.getMessage();
             return false;
         }
     }
 //Este metodo ya esta finalizado
     //Metodo para modificar ventas  
-    public int ModificarVenta(Ventas ventas){
+    public int modificarVenta(Ventas ventas){
         Connection conn = null;
         PreparedStatement stmt = null;
         Cliente cliente = ventas.getCliente();
