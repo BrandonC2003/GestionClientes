@@ -27,7 +27,7 @@ public class SvClientes extends HttpServlet {
         switch(accion){
             case "listar":
                  List<Cliente> clientes = new ClienteDao().listar();
-                request.setAttribute("Cliente", clientes);
+                request.setAttribute("clientes", clientes);
                 request.getRequestDispatcher("clientes/listar.jsp").forward(request, response);
                 break;
             case "agregar":
