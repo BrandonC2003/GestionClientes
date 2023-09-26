@@ -4,7 +4,9 @@
  */
 package com.utec.controlador;
 
+import com.utec.datos.ClienteDao;
 import com.utec.datos.ProductoDao;
+import com.utec.modelo.Cliente;
 import com.utec.modelo.Productos;
 import java.io.IOException;
 import java.util.List;
@@ -50,10 +52,13 @@ public class SvProductos extends HttpServlet {
             throws ServletException, IOException {
        String accion = request.getParameter("accion");
         
+       List<Cliente> cliente = new ClienteDao().listar();
+        request.setAttribute("cliente",cliente);
+       
         switch(accion){
-            /***/case "listar":
+            case "listar":
                  List<Productos> producto = new ProductoDao().listar();
-                request.setAttribute("ventas", producto);
+                request.setAttribute("productos", producto);
                 request.getRequestDispatcher("productos/listar.jsp").forward(request, response);
                 break;
             case "agregar":
