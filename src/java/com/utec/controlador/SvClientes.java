@@ -1,9 +1,7 @@
 package com.utec.controlador;
 
 import com.utec.datos.ClienteDao;
-import com.utec.datos.VentasDao;
 import com.utec.modelo.Cliente;
-import com.utec.modelo.Ventas;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
