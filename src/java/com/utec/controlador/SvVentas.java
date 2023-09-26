@@ -49,7 +49,9 @@ public class SvVentas extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        
+        //lista de clientes para que el usuario seleccione el cliente de la venta
+        List<Cliente> cliente = new ClienteDao().listar();
+        request.setAttribute("cliente",cliente);
         switch(accion){
             case "listar":
                  List<Ventas> clientes = new VentasDao().listar();
@@ -57,8 +59,6 @@ public class SvVentas extends HttpServlet {
                 request.getRequestDispatcher("ventas/listar.jsp").forward(request, response);
                 break;
             case "agregar":
-                List<Cliente> cliente = new ClienteDao().listar();
-                request.setAttribute("cliente",cliente);
                 request.getRequestDispatcher("ventas/agregar.jsp").forward(request,response);
                 break;
             case "modificar":
