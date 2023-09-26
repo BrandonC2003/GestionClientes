@@ -5,14 +5,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Ventas</title>
+        <title>Clientes</title>
 
         <!--bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-        <!--Bootstrap icons-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     </head>
     <body>
         <nav class="navbar bg-dark navbar-expand-lg" dada-bs-theme="dark">
@@ -23,11 +21,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
+                        <%--<li class="nav-item">
                             <a class="nav-link text-white" href="#">Productos</a>
-                        </li>
+                        </li>--%>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="${pageContext.request.contextPath}/SvVentas?accion=listar">Ventas</a>
+                            <a class="nav-link text-white" href="${pageContext.request.contextPath}/SvClientes?accion=listar">Clientes</a>
                         </li>
                     </ul>
                 </div>
@@ -36,37 +34,31 @@
         <article class="container mt-5">
             <div class="card">
                 <div class="card-header justify-content-between d-flex">
-                    <h3 class="card-tile">Ventas</h3>
-                    <a class="btn btn-success" href="${pageContext.request.contextPath}/SvVentas?accion=agregar">Agregar Venta</a>
+                    <h3 class="card-tile">Clientes</h3>
+                    <a class="btn btn-success" href="${pageContext.request.contextPath}/SvClientes?accion=agregar">Agregar Cliente</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Venta</th>
                                 <th>Cliente</th>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Precio Unitario</th>
-                                <th>Total</th>
-                                <th>Fecha</th>
-                                <th>Acciones</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th>Telefono</th>
+                                <th>Saldo</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="ventas" items="${ventas}">
+                            <c:forEach var="clientes" items="${clientes}">
                                 <tr>
-                                    <td>${ventas.idVenta}</td>
-                                    <td>${ventas.cliente.nombres} ${ventas.cliente.apellidos}</td>
-                                    <td>${ventas.productos.producto}</td>
-                                    <td>${ventas.cantidad}</td>
-                                    <td>${ventas.precioProd}</td>
-                                    <td>${ventas.totalVenta}</td>
-                                    <td>${ventas.fecha}</td>
-                                    <td>
-                                        <a class="btn btn-warning" href="${pageContext.request.contextPath}/SvVentas?accion=modificar&idVenta=${ventas.idVenta}"><i class="bi bi-pencil-square"></i></a>
-                                        <a class="btn btn-danger"><i class="bi bi-trash"></i></a>
-                                    </td>
+                                    <td>${clientes.idcliente}</td>
+                                    <td>${clientes.nombre}</td>
+                                   <td>${clientes.apellido}</td>
+                                   <td>${clientes.email}</td>
+                                   <td>${clientes.telefono}</td>
+                                   <td>${clientes.saldo}</td>
+                                    <td></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
@@ -8,3 +9,19 @@
         </group>
     </open-files>
 </project-private>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/src/java/com/utec/controlador/SvVentas.java</file>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/web/ventas/Modificar.jsp</file>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/web/ventas/listar.jsp</file>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/web/ventas/agregar.jsp</file>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/web/clientes/listar.jsp</file>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/src/java/com/utec/controlador/SvClientes.java</file>
+        </group>
+    </open-files>
+</project-private>
+>>>>>>> 85e9c4df9f7a134f4cca8b12cb2c1c7c9c2f40b3
