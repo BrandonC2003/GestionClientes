@@ -56,6 +56,9 @@ public class SvClientes extends HttpServlet {
             case "modificar":
                 request.getRequestDispatcher("clientes/listar.jsp").forward(request,response);
                 break;
+            case "eliminar":
+                response.sendRedirect("SvClientes?accion=listar");
+                break;
             default:
                 request.getRequestDispatcher("error.jsp").forward(request,response);
                 break;

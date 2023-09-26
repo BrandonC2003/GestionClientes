@@ -174,19 +174,19 @@ public class VentasDao {
         }
         return rows;
     }
-    public void EliminarVenta(Ventas ventas){
+    public boolean eliminarVenta(Ventas ventas){
     Connection conn = null;
     PreparedStatement stmt = null;
-    int rows = 0;
-
     try{
         conn = Conexion.conectarse();
         stmt = conn.prepareStatement(SQL_DELETE);
         stmt.setInt(1,ventas.getIdVenta());
-
-        rows =stmt.executeUpdate();
+        stmt.execute();
+        return true;
+        
     }catch(SQLException ex){
         ex.printStackTrace(System.out);
+        return false;
     }finally{
         Conexion.close(stmt);
         Conexion.close(conn);

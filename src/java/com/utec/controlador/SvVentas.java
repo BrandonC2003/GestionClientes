@@ -91,6 +91,14 @@ public class SvVentas extends HttpServlet {
             case "modificar":
                 request.getRequestDispatcher("ventas/listar.jsp").forward(request,response);
                 break;
+            case "eliminar":
+                Ventas venta = new Ventas();
+                venta.setIdVenta(Integer.parseInt(request.getParameter("IdVenta")));
+                VentasDao ventaD = new VentasDao();
+                if(ventaD.eliminarVenta(venta)){
+                    response.sendRedirect("SvVentas?accion=listar");
+                }
+                break;
             default:
                 request.getRequestDispatcher("error.jsp").forward(request,response);
                 break;
