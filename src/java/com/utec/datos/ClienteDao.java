@@ -10,13 +10,13 @@ import java.util.List;
 
 public class ClienteDao {
     // Definimos variables donde almacenaremos los query para realizar CRUD
-    private static final String SQL_SELECT = "SELECT IdCliente, Nombre, Apellido, Email, Telefono, Saldo FROM Cliente";
+    private static final String SQL_SELECT = "SELECT IdCliente, Nombres, Apellidos, Email, Telefono, Saldo FROM Cliente";
 
-    private static final String SQL_SELECT_BY_ID = "SELECT IdCliente, Nombre, Apellido, Email, Telefono, Saldo FROM Cliente WHERE IdCliente = ?";
+    private static final String SQL_SELECT_BY_ID = "SELECT IdCliente, Nombres, Apellidos, Email, Telefono, Saldo FROM Cliente WHERE IdCliente = ?";
 
-    private static final String SQL_INSERT = "INSERT INTO Cliente(Nombre, Apellido, Email, Telefono, Saldo) VALUES(?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO Cliente(Nombres, Apellidos, Email, Telefono, Saldo) VALUES(?, ?, ?, ?, ?)";
 
-    private static final String SQL_UPDATE = "UPDATE Cliente SET Nombre=?, Apellido=?, Email=?, Telefono=?, Saldo=? WHERE IdCliente=?";
+    private static final String SQL_UPDATE = "UPDATE Cliente SET Nombres=?, Apellidos=?, Email=?, Telefono=?, Saldo=? WHERE IdCliente=?";
 
     private static final String SQL_DELETE = "DELETE FROM Cliente WHERE IdCliente = ?";
 
@@ -34,8 +34,8 @@ public class ClienteDao {
             rs = stmt.executeQuery();
             while (rs.next()) {
                 int idCliente = rs.getInt("IdCliente");
-                String nombre = rs.getString("Nombre");
-                String apellido = rs.getString("Apellido");
+                String nombre = rs.getString("Nombres");
+                String apellido = rs.getString("Apellidos");
                 String email = rs.getString("Email");
                 String telefono = rs.getString("Telefono");
                 float saldo = rs.getFloat("Saldo");
