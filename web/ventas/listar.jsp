@@ -13,11 +13,17 @@
 
         <!--Bootstrap icons-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+        <!--SweetAlert-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <!--jquery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
         <nav class="navbar bg-dark navbar-expand-lg" dada-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/SvClientes">Usuarios</a>
+                <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/SvClientes?accion=listar">Clientes</a>
                 <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,7 +43,7 @@
             <div class="card">
                 <div class="card-header justify-content-between d-flex">
                     <h3 class="card-tile">Ventas</h3>
-                    <a class="btn btn-success" href="${pageContext.request.contextPath}/SvVentas?accion=agregar">Agregar Venta</a>
+                    <a class="btn btn-success" href="${pageContext.request.contextPath}/SvVentas?accion=agregar"><i class="bi bi-plus-circle"></i> Agregar Venta</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped table-bordered">
@@ -65,7 +71,7 @@
                                     <td>${ventas.fecha}</td>
                                     <td>
                                         <a class="btn btn-warning" href="${pageContext.request.contextPath}/SvVentas?accion=modificar&idVenta=${ventas.idVenta}"><i class="bi bi-pencil-square"></i></a>
-                                        <a class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                        <button class="btn btn-danger btn-eliminar" value="${ventas.idVenta}"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -74,5 +80,33 @@
                 </div>
             </div>
         </article>
+        <form action="SvVentas?accion=eliminar" method="POST" hidden id="formEliminar">
+            <input type="hidden" name="IdVenta" id="idVenta">
+        </form>
+        <script>
+            $(document).ready(function () {
+
+                $(".btn-eliminar").click(function (e) {
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: 'Esta acción eliminará la venta permanentemente.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            let idVenta = $(this).val();
+                            $("#idVenta").val(idVenta);
+                            $("#formEliminar").submit();
+                        }
+                    });
+                });
+
+            });
+
+        </script>
     </body>
 </html>

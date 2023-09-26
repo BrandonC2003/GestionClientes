@@ -27,7 +27,7 @@ public class SvClientes extends HttpServlet {
         switch(accion){
             case "listar":
                  List<Cliente> clientes = new ClienteDao().listar();
-                request.setAttribute("Cliente", clientes);
+                request.setAttribute("clientes", clientes);
                 request.getRequestDispatcher("clientes/listar.jsp").forward(request, response);
                 break;
             case "agregar":
@@ -55,6 +55,9 @@ public class SvClientes extends HttpServlet {
                 break;
             case "modificar":
                 request.getRequestDispatcher("clientes/listar.jsp").forward(request,response);
+                break;
+            case "eliminar":
+                response.sendRedirect("SvClientes?accion=listar");
                 break;
             default:
                 request.getRequestDispatcher("error.jsp").forward(request,response);

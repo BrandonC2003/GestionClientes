@@ -10,11 +10,7 @@ public class Conexion {
     // Variables a utilizar
     private static final String USUARIO = "root";
     private static final String PASS = "";
-<<<<<<< HEAD
-    private static final String URL = "jdbc:mysql://localhost:3306/GestionClientes";
-=======
-    private static final String URL = "jdbc:mysql://localhost:3306/gestioncliente";
->>>>>>> 85e9c4df9f7a134f4cca8b12cb2c1c7c9c2f40b3
+    private static final String URL = "jdbc:mysql://localhost:3307/GestionClientes";
     // variable para gestionar la conexion
     private static Connection conexion = null;
     
