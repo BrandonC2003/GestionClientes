@@ -1,7 +1,9 @@
 package com.utec.controlador;
 
 import com.utec.datos.ClienteDao;
+import com.utec.datos.VentasDao;
 import com.utec.modelo.Cliente;
+import com.utec.modelo.Ventas;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -22,17 +24,45 @@ public class SvClientes extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Cliente> clientes = new ClienteDao().listar();
-        System.out.println("clientes = " + clientes);
-        request.setAttribute("clientes", clientes);
-        request.getRequestDispatcher("clientes.jsp").forward(request, response);
-
+       String accion = request.getParameter("accion");
+        
+        switch(accion){
+            case "listar":
+                 List<Cliente> clientes = new ClienteDao().listar();
+                request.setAttribute("Cliente", clientes);
+                request.getRequestDispatcher("clientes/listar.jsp").forward(request, response);
+                break;
+            case "agregar":
+                request.getRequestDispatcher("clientes/agregar.jsp").forward(request,response);
+                break;
+            case "modificar":
+                request.getRequestDispatcher("clientes/modificar.jsp").forward(request,response);
+                break;
+            default:
+                request.getRequestDispatcher("error.jsp").forward(request,response);
+                break;
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+             String accion = request.getParameter("accion");
+        
+        switch(accion){
+            case "agregar":
+                
+                response.sendRedirect("SvClientes?accion=listar");
+                break;
+            case "modificar":
+                request.getRequestDispatcher("clientes/listar.jsp").forward(request,response);
+                break;
+            default:
+                request.getRequestDispatcher("error.jsp").forward(request,response);
+                break;
+        }
+        
     }
 
     @Override
