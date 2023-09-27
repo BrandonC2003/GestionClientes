@@ -10,7 +10,8 @@
         <!--bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!--Bootstrap icons-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     </head>
@@ -57,13 +58,13 @@
                                 <tr>
                                     <td>${clientes.idCliente}</td>
                                     <td>${clientes.nombres}</td>
-                                   <td>${clientes.apellidos}</td>
-                                   <td>${clientes.email}</td>
-                                   <td>${clientes.telefono}</td>
-                                   <td>${clientes.saldo}</td>
-                                   <td>
+                                    <td>${clientes.apellidos}</td>
+                                    <td>${clientes.email}</td>
+                                    <td>${clientes.telefono}</td>
+                                    <td>${clientes.saldo}</td>
+                                    <td>
                                         <a class="btn btn-warning" href="${pageContext.request.contextPath}/SvClientes?accion=modificar&idCliente=${clientes.idCliente}"><i class="bi bi-pencil-square"></i></a>
-                                        <a class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                        <button class="btn btn-danger btn-eliminar" value="${clientes.idCliente}"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -72,5 +73,34 @@
                 </div>
             </div>
         </article>
+        <form action="SvClientes?accion=eliminar" method="POST" hidden id="formEliminar">
+            <input type="hidden" name="IdCliente" id="idCliente">
+        </form>
+        <script>
+            $(document).ready(function () {
+
+                $(".btn-eliminar").click(function () {
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: 'Esta acción eliminará al cliente permanentemente.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            let idCliente = $(this).val();
+                            console.log(idCliente);
+                            $("#idCliente").val(idCliente);
+                            $("#formEliminar").submit();
+                        }
+                    });
+                });
+
+            });
+
+        </script>
     </body>
 </html>
