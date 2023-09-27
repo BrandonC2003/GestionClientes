@@ -1,6 +1,8 @@
 package com.utec.datos;
 
 import com.utec.modelo.Cliente;
+import com.utec.modelo.Productos;
+import com.utec.modelo.Ventas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -87,7 +89,61 @@ public class ClienteDao {
         }
         return cliente;
     }
+    
+    public String insertarCliente(Cliente cliente) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        Cliente clientes = cliente.getCliente();
 
+       
+        try {
+            conn = Conexion.conectarse();
+            stmt = conn.prepareStatement(SQL_INSERT);
+            stmt.setInt(1, clientes.getIdCliente());
+            stmt.setString(2, clientes.getNombres());
+            stmt.setString(3, clientes.getApellidos());
+            stmt.setString(4, clientes.getEmail());
+            stmt.setString(5, clientes.getTelefono());
+            stmt.setFloat(6, clientes.getSaldo());
+            stmt.execute();
+
+            return null;
+        } catch (SQLException ex) {
+            return ex.getMessage();
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+    }
+    
+    public String actualizarCliente(Cliente cliente) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        Cliente clientes = cliente.getCliente();
+
+       
+        try {
+            conn = Conexion.conectarse();
+            stmt = conn.prepareStatement(SQL_INSERT);
+            stmt.setInt(1, clientes.getIdCliente());
+            stmt.setString(2, clientes.getNombres());
+            stmt.setString(3, clientes.getApellidos());
+            stmt.setString(4, clientes.getEmail());
+            stmt.setString(5, clientes.getTelefono());
+            stmt.setFloat(6, clientes.getSaldo());
+            stmt.execute();
+            
+
+            return null;
+        } catch (SQLException ex) {
+            return ex.getMessage();
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+    }
+   
+    
     public boolean eliminarCliente(Cliente cliente) {
                 Connection conn = null;
         PreparedStatement stmt = null;
@@ -107,3 +163,5 @@ public class ClienteDao {
         }
     }
 }
+
+

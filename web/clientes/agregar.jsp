@@ -37,28 +37,20 @@
             <form action="SvClientes?accion=agregar" method="POST" id="formAgregar">
                 <div class="mb-5">
                     <label class="form-label" for="IdCliente">Cliente</label>
-                    <!--<select name="IdCliente" class="form-select" id="IdCliente">
-                        <option disabled selected>-Seleccionar-</option>
-                    <c:forEach var="cliente" items="${cliente}">
-                        <option value="${cliente.idCliente}">${cliente.nombres} ${cliente.apellidos} ${cliente.correo} 
-                        ${cliente.telefone} ${cliente.saldo}
-                        </option>
-                    </c:forEach> 
-                </select>-->
                     <br>
                     <br>
                     <form action="TuServlet" method="post">
                         <label for="nombre">Nombre:</label><br>
-                        <input type="text" id="nombre" name="nombre"><br><br>
-                        <label for="nombre">Apellido:</label><br>
-                        <input type="text" id="apellido" name="apellido"><br><br>
-                        <label for="nombre">Corrreo:</label><br>
-                        <input type="text" id="email" name="email"><br><br>
-                        <label for="nombre">Telefono:</label><br>
-                        <input type="text" id="telefono" name="telefono"><br><br>
-                        <label for="nombre">Saldo:</label><br>
-                        <input type="text" id="saldo" name="saldo"><br><br>
-                         <input type="submit" value="Enviar">
+                        <input type="text" id="nombre" name="nombre" value="${cliente.nombres}"><br><br>
+                        <label for="apellido">Apellido:</label><br>
+                        <input type="text" id="apellido" name="apellido" value="${cliente.apellidos}"><br><br>
+                        <label for="email">Corrreo:</label><br>
+                        <input type="text" id="email" name="email" value="${cliente.email}"><br><br>
+                        <label for="telefono">Telefono:</label><br>
+                        <input type="text" id="telefono" name="telefono" value="${cliente.telefono}"><br><br>
+                        <label for="saldo">Saldo:</label><br>
+                        <input type="text" id="saldo" name="saldo" value="${cliente.saldo}"><br><br>
+                        <input type="submit" class="btn btn-dark" value="Agregar Cliente">
                     </form>
                     <span class="text-danger" id="idClienteVal"></span>
                 </div>
@@ -69,19 +61,25 @@
                 $("#formAgregar").submit(function (e) {
                     e.preventDefault();
                     $("#idClienteVal").text("");
+                    $("#nombreVal").text("");
+                    $("#apellidoVal").text("");
+                    $("#emailVal").text("");
+                    $("#telefonoVal").text("");
+                    $("#saldoVal").text("");
                     let idCliente = $("#IdCliente").val();
-                    if (idCliente === null) {
-                        $("#idClienteVal").text("Tienes que seleccionar un cliente.");
-                        return false;
-                    }
-                    this.submit();
+                    let nombres = $("#Nombre").val();
+                    let apellidos = $("#N}Apellido").val();
+                    let email = $("#Email").val();
+                    let telefono = $("#Telefono").val();
+                    let saldo = $("#Saldo").val();
+                    if (idCliente === null)
+                    if (nombres === not null)
+                    if (apellidos === not null)
+                    if (telefono === not null)
+                    if (telefono === not null)
+                    if (saldo === not null)
+                        this.submit();
                 });
-
-                //metodo para validar si un valor es entero y positivo
-                function esEntero(valor) {
-                    var patron = /^[1-9]\d*$/;
-                    return patron.test(valor);
-                }
             });
         </script>    
     </body>
