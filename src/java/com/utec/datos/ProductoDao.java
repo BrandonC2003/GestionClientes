@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ProductoDao {
     
-    private static final String SQL_SELECT = "SELECT p.IdProducto, p.Producto, p.Tipo, p.Cantidad, p.Precio FROM productos";
+    private static final String SQL_SELECT = "SELECT IdProducto, Producto, Tipo, Cantidad, Precio FROM productos";
 
     private static final String SQL_SELECT_BY_ID = "SELECT IdProducto, Producto, Tipo, Cantidad, Precio FROM productos WHERE IdProducto = ?";
 
@@ -32,8 +32,7 @@ public class ProductoDao {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Productos producto = null;        
-        Cliente cliente = null;
+        Productos producto = null;
         List<Productos> listProducto = new ArrayList<>();
 
         try {
@@ -42,26 +41,12 @@ public class ProductoDao {
             rs = stmt.executeQuery();
             while (rs.next()) {                
                 producto = new Productos();
-                cliente = new Cliente();
-                //recuperar datos de las ventas
+                //recuperar datos de los productos
                 producto.setIdProducto(rs.getInt("IdProducto"));
                 producto.setProducto(rs.getString("Producto"));
                 producto.setCantidad(rs.getInt("Cantidad"));
                 producto.setPrecio(rs.getDouble("Precio"));
-                producto.setTipo(rs.getString("Tipo"));                
-               
-                //Datos del cliente.
-                cliente.setNombres(rs.getString("Nombres"));
-                cliente.setApellidos(rs.getString("Apellidos"));
-               
-               //colocar en la venta los datos del cliente
-                //producto.setCliente(cliente);
-
-                //recuperar datos del producto
-                producto.setProducto(rs.getString("Producto"));
-
-                //colocar en la venta los datos del producto
-                //producto.setProducto(producto);
+                producto.setTipo(rs.getString("Tipo"));
                 
                 listProducto.add(producto);
             }

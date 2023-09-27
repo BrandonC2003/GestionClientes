@@ -8,5 +8,4 @@ public class TestConexion {
         List<Cliente> clientes = new ClienteDao().listar();
         System.out.println("clientes = " + clientes);
     }
-                
 }

@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Productos</a>
+                            <a class="nav-link text-white" href="${pageContext.request.contextPath}/SvProductos?accion=listar">Productos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="${pageContext.request.contextPath}/SvVentas?accion=listar">Ventas</a>
@@ -46,7 +47,7 @@
                     <a class="btn btn-success" href="${pageContext.request.contextPath}/SvVentas?accion=agregar"><i class="bi bi-plus-circle"></i> Agregar Venta</a>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Venta</th>
@@ -60,14 +61,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="ventas" items="${ventas}">
+                            <c:forEach var="ventas"  items="${ventas}">
                                 <tr>
                                     <td>${ventas.idVenta}</td>
                                     <td>${ventas.cliente.nombres} ${ventas.cliente.apellidos}</td>
                                     <td>${ventas.productos.producto}</td>
                                     <td>${ventas.cantidad}</td>
-                                    <td>${ventas.precioProd}</td>
-                                    <td>${ventas.totalVenta}</td>
+                                    <td><fmt:formatNumber value="${ventas.precioProd}" type="currency" currencySymbol="$" /></td>
+                                    <td><fmt:formatNumber value="${ventas.totalVenta}" type="currency" currencySymbol="$" /></td>
                                     <td>${ventas.fecha}</td>
                                     <td>
                                         <a class="btn btn-warning" href="${pageContext.request.contextPath}/SvVentas?accion=modificar&idVenta=${ventas.idVenta}"><i class="bi bi-pencil-square"></i></a>

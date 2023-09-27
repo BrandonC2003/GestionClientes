@@ -16,12 +16,15 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script><!-- comment -->
 
+        <!--SweetAlert-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <!--jquery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     </head>
     <body>
-        <nav class="navbar bg-dark navbar-expand-lg" dada-bs-theme="dark">
+         <nav class="navbar bg-dark navbar-expand-lg" dada-bs-theme="dark">
             <div class="container-fluid">
                 <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/SvClientes?accion=listar">Clientes</a>
                 <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +33,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Productos</a>
+                            <a class="nav-link text-white" href="${pageContext.request.contextPath}/SvProductos?accion=listar">Productos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="${pageContext.request.contextPath}/SvVentas?accion=listar">Ventas</a>
@@ -56,7 +59,9 @@
                     <label class="form-label" for="IdProducto">Producto</label>
                     <select name="IdProducto" class="form-select" id="IdProducto">
                         <option disabled selected>-Seleccionar-</option>
-                        <option value="1">Churritos</option>
+                        <c:forEach var="producto" items="${producto}">
+                            <option value="${producto.idProducto}">${producto.producto}</option>
+                        </c:forEach> 
                     </select>
                     <span class="text-danger" id="idProductoVal"></span>
                 </div>
@@ -64,6 +69,7 @@
                     <label class="form-label" for="Cantidad">Cantidad</label>
                     <input type="number" class="form-control" name="Cantidad" id="Cantidad">
                     <span class="text-danger" id="cantidadVal"></span>
+
                 </div>
                 <div class="mb-5">
                     <a class="btn btn-warning" href="${pageContext.request.contextPath}/SvVentas?accion=listar">Cancelar</a>
@@ -101,6 +107,18 @@
                     this.submit();
                 });
                 
+                //mostrar las validaciones de la base de datos
+                const error = '<c:out value="${requestScope.errorMessage}" />';
+
+                if (error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: error,
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
                 //metodo para validar si un valor es entero y positivo
                 function esEntero(valor) {
                     var patron = /^[1-9]\d*$/;

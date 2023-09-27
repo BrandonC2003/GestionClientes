@@ -51,9 +51,9 @@ public class SvProductos extends HttpServlet {
        String accion = request.getParameter("accion");
         
         switch(accion){
-            /***/case "listar":
-                 List<Productos> producto = new ProductoDao().listar();
-                request.setAttribute("ventas", producto);
+            case "listar":
+                List<Productos> producto = new ProductoDao().listar();
+                request.setAttribute("productos", producto);
                 request.getRequestDispatcher("productos/listar.jsp").forward(request, response);
                 break;
             case "agregar":

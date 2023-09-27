@@ -66,8 +66,8 @@ public class ClienteDao {
             //rs.absolute(1);//nos posicionamos en el primer registro devuelto
             rs.next();
 
-            String nombre = rs.getString("Nombres");
-            String apellido = rs.getString("Apellidos");
+            String nombre = rs.getString("Nombre");
+            String apellido = rs.getString("Apellido");
             String email = rs.getString("Email");
             String telefono = rs.getString("Telefono");
             float saldo = rs.getFloat("Saldo");
