@@ -1,7 +1,9 @@
 package com.utec.controlador;
 
 import com.utec.datos.ClienteDao;
+import com.utec.datos.VentasDao;
 import com.utec.modelo.Cliente;
+import com.utec.modelo.Ventas;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -51,13 +53,18 @@ public class SvClientes extends HttpServlet {
         switch(accion){
             case "agregar":
                 
-                response.sendRedirect("SvClientes?accion=listar");
+                response.sendRedirect("SvCliente?accion=listar");
                 break;
             case "modificar":
                 request.getRequestDispatcher("clientes/listar.jsp").forward(request,response);
                 break;
             case "eliminar":
-                response.sendRedirect("SvClientes?accion=listar");
+                Cliente clientes = new Cliente();
+                clientes.setIdCliente(Integer.parseInt(request.getParameter("IdCliente")));
+                ClienteDao clientD = new ClienteDao();
+              if(clientD.eliminarCliente(clientes)){
+                    response.sendRedirect("SvCliente?accion=listar");
+                }
                 break;
             default:
                 request.getRequestDispatcher("error.jsp").forward(request,response);

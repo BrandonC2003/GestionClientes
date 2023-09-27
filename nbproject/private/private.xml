@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Cristian%20De%20Paz/Documents/NetBeansProjects/GestionClientes/web/index.jsp</file>
-            <file>file:/C:/Users/Cristian%20De%20Paz/Documents/NetBeansProjects/GestionClientes/src/java/com/utec/controlador/SvProductos.java</file>
-            <file>file:/C:/Users/Cristian%20De%20Paz/Documents/NetBeansProjects/GestionClientes/src/java/com/utec/datos/Conexion.java</file>
-            <file>file:/C:/Users/Cristian%20De%20Paz/Documents/NetBeansProjects/GestionClientes/src/java/com/utec/controlador/SvClientes.java</file>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/web/clientes/agregar.jsp</file>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/web/clientes/listar.jsp</file>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/src/java/com/utec/datos/ClienteDao.java</file>
+            <file>file:/D:/Gerson/Ejercicios%20en%20netbens/GestionClientes/src/java/com/utec/controlador/SvClientes.java</file>
         </group>
     </open-files>
 </project-private>

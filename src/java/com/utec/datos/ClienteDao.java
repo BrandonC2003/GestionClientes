@@ -87,4 +87,23 @@ public class ClienteDao {
         }
         return cliente;
     }
+
+    public boolean eliminarCliente(Cliente cliente) {
+                Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = Conexion.conectarse();
+            stmt = conn.prepareStatement(SQL_DELETE);
+            stmt.setInt(1, cliente.getIdCliente());
+            stmt.execute();
+            return true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            return false;
+        } finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
+        }
+    }
 }
