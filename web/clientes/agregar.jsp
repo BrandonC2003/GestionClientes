@@ -34,22 +34,22 @@
         </nav>
         <article class="container mt-5">
 
-            <form action="SvClientes?accion=agregar" method="POST" id="formAgregar">
+            <form action="SvClientes?accion=insertarCliente" method="POST" id="formAgregar">
                 <div class="mb-5">
                     <label class="form-label" for="IdCliente">Cliente</label>
                     <br>
                     <br>
                     <form action="TuServlet" method="post">
                         <label for="nombre">Nombre:</label><br>
-                        <input type="text" id="nombre" name="nombre" value="${cliente.nombres}"><br><br>
+                        <input type="text" id="nombre" name="nombre"><br><br>
                         <label for="apellido">Apellido:</label><br>
-                        <input type="text" id="apellido" name="apellido" value="${cliente.apellidos}"><br><br>
+                        <input type="text" id="apellido" name="apellido"><br><br>
                         <label for="email">Corrreo:</label><br>
-                        <input type="text" id="email" name="email" value="${cliente.email}"><br><br>
+                        <input type="text" id="email" name="email"><br><br>
                         <label for="telefono">Telefono:</label><br>
-                        <input type="text" id="telefono" name="telefono" value="${cliente.telefono}"><br><br>
+                        <input type="text" id="telefono" name="telefono"><br><br>
                         <label for="saldo">Saldo:</label><br>
-                        <input type="text" id="saldo" name="saldo" value="${cliente.saldo}"><br><br>
+                        <input type="text" id="saldo" name="saldo"><br><br>
                         <input type="submit" class="btn btn-dark" value="Agregar Cliente">
                     </form>
                     <span class="text-danger" id="idClienteVal"></span>
@@ -57,30 +57,6 @@
             </form>
         </article>
         <script>
-            $(document).ready(function () {
-                $("#formAgregar").submit(function (e) {
-                    e.preventDefault();
-                    $("#idClienteVal").text("");
-                    $("#nombreVal").text("");
-                    $("#apellidoVal").text("");
-                    $("#emailVal").text("");
-                    $("#telefonoVal").text("");
-                    $("#saldoVal").text("");
-                    let idCliente = $("#IdCliente").val();
-                    let nombres = $("#Nombre").val();
-                    let apellidos = $("#N}Apellido").val();
-                    let email = $("#Email").val();
-                    let telefono = $("#Telefono").val();
-                    let saldo = $("#Saldo").val();
-                    if (idCliente === null)
-                    if (nombres === not null)
-                    if (apellidos === not null)
-                    if (telefono === not null)
-                    if (telefono === not null)
-                    if (saldo === not null)
-                        this.submit();
-                });
-            });
         </script>    
     </body>
 </html>

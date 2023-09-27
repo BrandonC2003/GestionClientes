@@ -50,10 +50,22 @@ public class SvClientes extends HttpServlet {
         processRequest(request, response);
              String accion = request.getParameter("accion");
         
+             Cliente cliente = new Cliente();
+             ClienteDao clientes1 = new ClienteDao();
+             
         switch(accion){
             case "agregar":
-                
-                response.sendRedirect("SvCliente?accion=listar");
+                 cliente.setIdCliente(Integer.parseInt(request.getParameter("IdCliente")));
+                 cliente.setNombre(request.getParameter("nombre"));
+                 cliente.setApellido(request.getParameter("apellido"));
+                 cliente.setEmail(request.getParameter("email"));
+                 cliente.setTelefono(request.getParameter("telefono"));
+                 cliente.setSaldo(Float.parseFloat(request.getParameter("Saldo")));
+                 
+                 String result = clientes1.insertarCliente(cliente);
+                if(result==null){
+                     response.sendRedirect("SvCleintes?accion=listar"+result);
+                }
                 break;
             case "modificar":
                 request.getRequestDispatcher("clientes/listar.jsp").forward(request,response);
