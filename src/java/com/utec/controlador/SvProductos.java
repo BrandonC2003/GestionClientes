@@ -48,7 +48,9 @@ public class SvProductos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String accion = request.getParameter("accion");
+        String accion = request.getParameter("accion");
+        Productos product = new Productos();
+        
         
         switch(accion){
             case "listar":
@@ -60,6 +62,9 @@ public class SvProductos extends HttpServlet {
                 request.getRequestDispatcher("productos/agregar.jsp").forward(request,response);
                 break;
             case "modificar":
+                product.setIdProducto(Integer.parseInt(request.getParameter("idProducto")));
+                Productos prod = new ProductoDao().encontrar(product);
+                request.setAttribute("producto",prod);
                 request.getRequestDispatcher("productos/modificar.jsp").forward(request,response);
                 break;
             default:
@@ -80,13 +85,36 @@ public class SvProductos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        
+         String errorMessage=null;
+         Productos producto = new Productos();
+         ProductoDao prodDao = new ProductoDao();
         switch(accion){
-            case "agregar":                
-                response.sendRedirect("SvProductos?accion=listar");
+            case "agregar":     
+                producto.setProducto(request.getParameter("Producto"));
+                producto.setTipo(request.getParameter("Tipo"));
+                producto.setCantidad(Integer.parseInt(request.getParameter("Cantidad")));
+                producto.setPrecio(Double.parseDouble(request.getParameter("Precio")));
+                errorMessage = prodDao.insertarProducto(producto);
+                if(errorMessage==null){
+                     response.sendRedirect("SvProductos?accion=listar");
+                }
                 break;
             case "modificar":
-                request.getRequestDispatcher("productos/listar.jsp").forward(request,response);
+                producto.setIdProducto(Integer.parseInt(request.getParameter("IdProducto")));
+                producto.setProducto(request.getParameter("Producto"));
+                producto.setTipo(request.getParameter("Tipo"));
+                producto.setCantidad(Integer.parseInt(request.getParameter("Cantidad")));
+                producto.setPrecio(Double.parseDouble(request.getParameter("Precio")));
+                errorMessage = prodDao.modificarProducto(producto);
+                if(errorMessage==null){
+                     response.sendRedirect("SvProductos?accion=listar");
+                }
+                break;
+            case "eliminar":
+                producto.setIdProducto(Integer.parseInt(request.getParameter("IdProducto")));
+                if(prodDao.eliminarProducto(producto)){
+                    response.sendRedirect("SvProductos?accion=listar");
+                }
                 break;
             default:
                 request.getRequestDispatcher("error.jsp").forward(request,response);

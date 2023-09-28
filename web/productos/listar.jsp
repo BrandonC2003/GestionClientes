@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Ventas</title>
+        <title>Productos</title>
 
         <!--bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -65,12 +65,12 @@
                             <c:forEach var="productos" items="${productos}">
                                 <tr>
                                     <td>${productos.producto}</td>
-                                    <td>${productos.cantidad}</td>
                                     <td>${productos.tipo}</td>
+                                    <td>${productos.cantidad}</td>
                                     <td>${productos.precio}</td>
                                     <td>
-                                        <a class="btn btn-warning" href="${pageContext.request.contextPath}/SvProductos?accion=modificar&idProdcuto=${productos.idProducto}"><i class="bi bi-pencil-square"></i></a>
-                                        <button class="btn btn-danger btn-eliminar" value="${productos.idProducto}"><i class="bi bi-trash"></i></button>
+                                        <a class="btn btn-warning" href="${pageContext.request.contextPath}/SvProductos?accion=modificar&idProducto=${productos.idProducto}"><i class="bi bi-pencil-square"></i></a>
+                                        <button class="btn btn-danger btn-eliminar" value="${productos.idProducto}" value="${productos.idProducto}"><i class="bi bi-trash"></i></button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -79,5 +79,33 @@
                 </div>
             </div>
         </article>
+        <form action="SvProductos?accion=eliminar" method="POST" hidden id="formEliminar">
+            <input type="hidden" name="IdProducto" id="idVenta">
+        </form>
+                <script>
+            $(document).ready(function () {
+
+                $(".btn-eliminar").click(function (e) {
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: 'Esta acción eliminará la venta permanentemente.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            let idVenta = $(this).val();
+                            $("#idVenta").val(idVenta);
+                            $("#formEliminar").submit();
+                        }
+                    });
+                });
+
+            });
+
+        </script>
     </body>
 </html>
