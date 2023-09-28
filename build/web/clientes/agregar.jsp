@@ -21,6 +21,9 @@
 
         <!--jquery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        <!--SweetAlert-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </head>
     <body>
@@ -50,21 +53,52 @@
                     <br>
                     <br>
                     <label for="nombre">Nombre:</label><br>
-                        <input type="text" id="nombre" name="nombre"><br><br>
+                        <input type="text" id="nombre" name="nombre" required><br><br>
                         <label for="apellido">Apellido:</label><br>
-                        <input type="text" id="apellido" name="apellido"><br><br>
+                        <input type="text" id="apellido" name="apellido" required><br><br>
                         <label for="email">Corrreo:</label><br>
-                        <input type="text" id="email" name="email"><br><br>
+                        <input type="email" id="email" name="email" required><br><br>
                         <label for="telefono">Telefono:</label><br>
-                        <input type="text" id="telefono" name="telefono"><br><br>
+                        <input type="text" id="telefono" name="telefono" required><br><br>
                         <label for="saldo">Saldo:</label><br>
-                        <input type="text" id="saldo" name="saldo"><br><br>
+                        <input type="number" id="saldo" name="saldo" step="0.01">
+                        <br>
+                        <span class="text-danger" id="saldoVal"></span>
+                        <br>
                         <input type="submit" class="btn btn-dark" value="Agregar Cliente">
                     <span class="text-danger" id="idClienteVal"></span>
                 </div>
             </form>
         </article>
+
         <script>
+            $(document).ready(function () {
+                $("#formAgregar").submit(function (e) {
+                    e.preventDefault();
+                    $("#saldoVal").text("");
+                    let saldo = $("#saldo").val();
+
+                    if (saldo ==="" ||saldo <= 0) {
+                        $("#saldoVal").text("El saldo tiene que ser un valor positivo.");
+                        return false;
+                    }
+
+                    this.submit();
+                });
+                
+                //mostrar las validaciones de la base de datos
+                const error = '<c:out value="${requestScope.errorMessage}" />';
+
+                if (error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: error,
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+            });
         </script>    
     </body>
 </html>
