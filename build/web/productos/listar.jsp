@@ -28,17 +28,17 @@
     <body>
         <nav class="navbar bg-dark navbar-expand-lg" dada-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/SvClientes">Usuarios</a>
+                <a class="navbar-brand text-white" href="${pageContext.request.contextPath}/SvClientes?accion=listar">Clientes</a>
                 <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Productos</a>
+                            <a class="nav-link text-white" href="${pageContext.request.contextPath}/SvProductos?accion=listar">Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="${pageContext.request.contextPath}/SvVentas?accion=listar">productos</a>
+                            <a class="nav-link text-white" href="${pageContext.request.contextPath}/SvVentas?accion=listar">Ventas</a>
                         </li>
                     </ul>
                 </div>
@@ -48,7 +48,7 @@
             <div class="card">
                 <div class="card-header justify-content-between d-flex">
                     <h3 class="card-tile">Productos</h3>
-                    <a class="btn btn-success" href="${pageContext.request.contextPath}/SvVentas?accion=agregar"><i class="bi bi-plus-circle"></i> Agregar Productos</a>
+                    <a class="btn btn-success" href="${pageContext.request.contextPath}/SvProductos?accion=agregar"><i class="bi bi-plus-circle"></i> Agregar Productos</a>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped table-bordered">
