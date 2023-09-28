@@ -26,6 +26,8 @@ public class SvClientes extends HttpServlet {
             throws ServletException, IOException {
        String accion = request.getParameter("accion");
         
+       Cliente cliente = new Cliente();
+       
         switch(accion){
             case "listar":
                  List<Cliente> clientes = new ClienteDao().listar();
@@ -36,6 +38,9 @@ public class SvClientes extends HttpServlet {
                 request.getRequestDispatcher("clientes/agregar.jsp").forward(request,response);
                 break;
             case "modificar":
+                cliente.setIdCliente(Integer.parseInt(request.getParameter("idCliente")));
+                Cliente client = new ClienteDao().encontrar(cliente);
+                request.setAttribute("client", client);
                 request.getRequestDispatcher("clientes/modificar.jsp").forward(request,response);
                 break;
             default:
@@ -66,8 +71,17 @@ public class SvClientes extends HttpServlet {
                      response.sendRedirect("SvClientes?accion=listar");
                 }
                 break;
-            case "modificar":
-                request.getRequestDispatcher("clientes/listar.jsp").forward(request,response);
+            case "modificar":  
+                cliente.setIdCliente(Integer.parseInt(request.getParameter("IdCliente")));
+                 cliente.setNombres(request.getParameter("nombre"));
+                 cliente.setApellidos(request.getParameter("apellido"));
+                 cliente.setEmail(request.getParameter("email"));
+                 cliente.setTelefono(request.getParameter("telefono"));
+                 cliente.setSaldo(Float.parseFloat(request.getParameter("saldo")));
+                  String resulta = clientes1.actualizarCliente(cliente);
+                if(resulta==null){
+               response.sendRedirect("SvClientes?accion=listar");
+                }
                 break;
             case "eliminar":
                 Cliente clientes = new Cliente();

@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Modificar Cliente</title>
+        
 
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -21,6 +22,9 @@
 
         <!--jquery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        <!--SweetAlert-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     </head>
     <body>
@@ -43,38 +47,61 @@
             </div>
         </nav>
         <article class="container mt-5">
+            <c:set var="cliente" value="${requestScope.client}" />
 
-            <form action="SvClientes?accion=insertarCliente" method="POST" id="formAgregar">
+            <form action="SvClientes?accion=modificar" method="POST" id="formAgregar">
+                <input type="hidden" value="${cliente.idCliente}" name="IdCliente">
                 <div class="mb-5">
                     <label class="form-label" for="IdCliente">Cliente</label>
                     <br>
                     <br>
-                    <form action="TuServlet" method="post">
-                        <label for="nombre">Nombre:</label><br>
-                        <input type="text" id="nombre" name="nombre" ${cliente.nombres}><br><br>
+                    <label for="nombre">Nombre:</label><br>
+                        <input type="text" id="nombre" name="nombre" required value="${cliente.nombres}"><br><br>
                         <label for="apellido">Apellido:</label><br>
-                        <input type="text" id="apellido" name="apellido" ${cliente.apellido}><br><br>
-                        <label for="email">Email:</label><br>
-                        <input type="text" id="email" name="email" ${cliente.email}><br><br>
+                        <input type="text" id="apellido" name="apellido" required value="${cliente.apellidos}"><br><br>
+                        <label for="email">Corrreo:</label><br>
+                        <input type="email" id="email" name="email" required value="${cliente.email}"><br><br>
                         <label for="telefono">Telefono:</label><br>
-                        <input type="text" id="telefono" name="telefono" ${cliente.Telefono}><br><br>
+                        <input type="text" id="telefono" name="telefono" required value="${cliente.telefono}"><br><br>
                         <label for="saldo">Saldo:</label><br>
-                        <input type="text" id="saldo" name="saldo" ${cliente.saldo}><br><br>
-                        <input type="submit" class="btn btn-dark" value="Agregar Cliente">
-                    </form>
+                        <input type="number" id="saldo" name="saldo" step="0.01" value="${cliente.saldo}">
+                        <br>
+                        <span class="text-danger" id="saldoVal"></span>
+                        <br>
+                        <input type="submit" class="btn btn-dark" value="Modificar Cliente">
                     <span class="text-danger" id="idClienteVal"></span>
                 </div>
             </form>
         </article>
+
         <script>
             $(document).ready(function () {
                 $("#formAgregar").submit(function (e) {
                     e.preventDefault();
-                    $("#idClienteVal").text("");
-                    let idCliente = $("#IdCliente").val();
+                    $("#saldoVal").text("");
+                    let saldo = $("#saldo").val();
+
+                    if (saldo ==="" ||saldo <= 0) {
+                        $("#saldoVal").text("El saldo tiene que ser un valor positivo.");
+                        return false;
+                    }
+
                     this.submit();
                 });
+                
+                //mostrar las validaciones de la base de datos
+                const error = '<c:out value="${requestScope.errorMessage}" />';
+
+                if (error) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: error,
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
             });
-        </script>      
+        </script>    
     </body>
 </html>

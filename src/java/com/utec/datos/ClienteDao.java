@@ -159,6 +159,10 @@ public class ClienteDao {
             Conexion.close(conn);
         }
     }
+
+    public String modificarCliente(Cliente cliente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 
 
