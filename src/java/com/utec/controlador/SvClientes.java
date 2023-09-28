@@ -55,16 +55,15 @@ public class SvClientes extends HttpServlet {
              
         switch(accion){
             case "agregar":
-                 cliente.setIdCliente(Integer.parseInt(request.getParameter("IdCliente")));
-                 cliente.setNombre(request.getParameter("nombre"));
-                 cliente.setApellido(request.getParameter("apellido"));
+                 cliente.setNombres(request.getParameter("nombre"));
+                 cliente.setApellidos(request.getParameter("apellido"));
                  cliente.setEmail(request.getParameter("email"));
                  cliente.setTelefono(request.getParameter("telefono"));
-                 cliente.setSaldo(Float.parseFloat(request.getParameter("Saldo")));
+                 cliente.setSaldo(Float.parseFloat(request.getParameter("saldo")));
                  
                  String result = clientes1.insertarCliente(cliente);
                 if(result==null){
-                     response.sendRedirect("SvCleintes?accion=listar"+result);
+                     response.sendRedirect("SvClientes?accion=listar");
                 }
                 break;
             case "modificar":
@@ -75,7 +74,7 @@ public class SvClientes extends HttpServlet {
                 clientes.setIdCliente(Integer.parseInt(request.getParameter("IdCliente")));
                 ClienteDao clientD = new ClienteDao();
               if(clientD.eliminarCliente(clientes)){
-                    response.sendRedirect("SvCliente?accion=listar");
+                    response.sendRedirect("SvClientes?accion=listar");
                 }
                 break;
             default:

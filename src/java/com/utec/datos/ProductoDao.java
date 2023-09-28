@@ -18,9 +18,9 @@ public class ProductoDao {
 
     private static final String SQL_SELECT_BY_ID = "SELECT IdProducto, Producto, Tipo, Cantidad, Precio FROM productos WHERE IdProducto = ?";
 
-    private static final String SQL_INSERT = "INSERT INTO Cliente(Nombres, Apellidos, Email, Telefono, Saldo) VALUES(?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "INSERT INTO productos(Producto, Tipo, Cantidad, Precio) VALUES(?, ?, ?, ?)";
 
-    private static final String SQL_UPDATE = "UPDATE productos SET IdProducto=?, Producto=?, Tipo=?, Cantidad=?, Precio=? WHERE IdVenta=?";
+    private static final String SQL_UPDATE = "UPDATE productos SET Producto=?, Tipo=?, Cantidad=?, Precio=? WHERE IdProducto=?";
 
     private static final String SQL_DELETE = "DELETE FROM productos WHERE IdProducto = ?";
     
@@ -60,12 +60,11 @@ public class ProductoDao {
         return listProducto;
     }
 
-    // Método para buscar una venta en particular
+    // Método para buscar un producto en particular
     public Productos encontrar(Productos producto) {
         Connection conn = null;
         PreparedStatement stmt = null;
-        ResultSet rs = null;       
-        Cliente cliente = new Cliente();
+        ResultSet rs = null;
         try {
             conn = Conexion.conectarse();
             stmt = conn.prepareStatement(SQL_SELECT_BY_ID);
@@ -80,20 +79,7 @@ public class ProductoDao {
                 producto.setProducto(rs.getString("Producto"));
                 producto.setCantidad(rs.getInt("Cantidad"));
                 producto.setPrecio(rs.getDouble("Precio"));
-                producto.setTipo(rs.getString("Tipo"));                 
-             
-               
-                //Datos del cliente.
-                cliente.setIdCliente(rs.getInt("IdCliente"));
-               
-               //colocar en la venta los datos del cliente
-                //venta.setCliente(cliente);
-
-                //recuperar datos del producto
-                producto.setIdProducto(rs.getInt("IdProducto"));
-
-                //colocar en la venta los datos del producto
-                //producto.setProducto(producto);
+                producto.setTipo(rs.getString("Tipo"));
 
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
@@ -105,66 +91,71 @@ public class ProductoDao {
         return producto;
     }
 
-    //Metodo para insertar una nueva venta
-    public boolean insertarProducto(Productos producto){
+    //Metodo para insertar productos
+    public String insertarProducto(Productos producto){
         Connection conn = null;
         PreparedStatement stmt = null;
-        ResultSet rs = null;
 
         try{
             conn = Conexion.conectarse();
-            stmt = conn.prepareStatement(SQL_SELECT);
-            rs = stmt.executeQuery();
+            stmt = conn.prepareStatement(SQL_INSERT);
+            stmt.setString(1, producto.getProducto());
+            stmt.setString(2, producto.getTipo());
+            stmt.setInt(3, producto.getCantidad());
+            stmt.setDouble(4, producto.getPrecio());
+            stmt.execute();
 
-            return true;
+            return null;
         }catch(SQLException ex){
-            ex.printStackTrace(System.out);
-            return false;
+            return ex.getMessage();
+        }finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
         }
     }
-//Este metodo ya esta finalizado
+    
     //Metodo para modificar producto  
-    public int ModificarProducto(Productos producto){
+    public String modificarProducto(Productos producto){
         Connection conn = null;
         PreparedStatement stmt = null;
-        //Cliente cliente = producto.getCliente();
-        int rows = 0;
-        //Realizamos el procedimiento
+       
+       
         try{
             conn = Conexion.conectarse();
             stmt = conn.prepareStatement(SQL_UPDATE);
-
-            // Multiplicar cantidad por precioProducto para obtener el monto de la venta
-        double totalProducto = producto.getCantidad() * producto.getPrecio();
-        
             
-            stmt.setInt(1,producto.getIdProducto());//Dato que vamos a seleccionar al momento de modifcar
-            stmt.setString(2,producto.getProducto());
-            stmt.setInt(3,producto.getCantidad());
-            stmt.setDouble(4,producto.getPrecio());
-            stmt.setString(5,producto.getTipo());            
+            stmt.setString(1, producto.getProducto());
+            stmt.setString(2, producto.getTipo());
+            stmt.setInt(3, producto.getCantidad());
+            stmt.setDouble(4, producto.getPrecio());
+            stmt.setInt(5,producto.getIdProducto());
+            stmt.execute();
 
-            //Creamos la operacion a realizar 
-            //la cantidad por el precio venta el
-            //cual sera el monto total
+            return null;
             
         }catch(SQLException ex){
+            return ex.getMessage();
+        }finally {
+            Conexion.close(stmt);
+            Conexion.close(conn);
         }
-        return rows;
+       
     }
-    public void EliminarProducto(Productos producto){
+    public boolean eliminarProducto(Productos producto){
     Connection conn = null;
     PreparedStatement stmt = null;
-    int rows = 0;
 
     try{
         conn = Conexion.conectarse();
         stmt = conn.prepareStatement(SQL_DELETE);
         stmt.setInt(1,producto.getIdProducto());
 
-        rows =stmt.executeUpdate();
+        stmt.execute();
+        
+        return true;
     }catch(SQLException ex){
         ex.printStackTrace(System.out);
+        return false;
     }finally{
         Conexion.close(stmt);
         Conexion.close(conn);

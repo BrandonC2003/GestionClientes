@@ -7,13 +7,13 @@ public class Cliente {
     private String apellidos;
     private String email;
     private String telefono;
-    private float saldo;
+    private double saldo;
 
     // constructores
     public Cliente() {
     }
 
-    public Cliente(int idCliente, String nombres, String apellidos, String email, String telefono, float saldo) {
+    public Cliente(int idCliente, String nombres, String apellidos, String email, String telefono, double saldo) {
         this.idCliente = idCliente;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -63,11 +63,11 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public float getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(float saldo) {
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
     
@@ -77,15 +77,4 @@ public class Cliente {
         return "Cliente{" + "idCliente=" + idCliente + ", nombres=" + nombres + ", apellidos=" + apellidos + ", email=" + email + ", telefono=" + telefono + ", saldo=" + saldo + '}';
     }
 
-    public Cliente getCliente() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setNombre(String parameter) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void setApellido(String parameter) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

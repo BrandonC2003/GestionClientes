@@ -125,6 +125,8 @@ public class VentasDao {
         PreparedStatement stmt = null;
         Productos producto = venta.getProductos();
         Cliente cliente = venta.getCliente();
+        ProductoDao productoDao = new ProductoDao();
+        ClienteDao clienteDao = new ClienteDao();
 
         //voy a buscar el prducto para obtener su precio
         Productos producto2 = new ProductoDao().encontrar(producto);
@@ -135,12 +137,12 @@ public class VentasDao {
         if (venta.getCantidad() > producto2.getCantidad()) {
             return "Solamente tenemos " + producto2.getCantidad() + " " + producto2.getProducto() + " Disponibles.";
         }
-        
+
         //Buscar un cliente para obtener su saldo
         Cliente cliente2 = new ClienteDao().encontrar(cliente);
         //validar que el cliente tenga los fondos suficientes.
-        if(cliente2.getSaldo() < venta.getTotalVenta()){
-            return "El saldo del cliente no es suficiente para realizar la venta. Solamente posee: $"+cliente.getSaldo();
+        if (cliente2.getSaldo() < venta.getTotalVenta()) {
+            return "El saldo del cliente no es suficiente para realizar la venta. Solamente posee: $" + cliente.getSaldo();
         }
         try {
             conn = Conexion.conectarse();
@@ -151,10 +153,14 @@ public class VentasDao {
             stmt.setDouble(4, venta.getPrecioProd());
             stmt.setDouble(5, venta.getTotalVenta());
             stmt.execute();
-            
+
             //descontar la cantidad de productos 
-            
+            producto2.setCantidad(producto2.getCantidad() - venta.getCantidad());
+            productoDao.modificarProducto(producto2);
+
             //descontar al cliente el Total de la venta
+            cliente2.setSaldo(cliente2.getSaldo() - venta.getTotalVenta());
+            clienteDao.actualizarCliente(cliente2);
 
             return null;
         } catch (SQLException ex) {
@@ -172,54 +178,59 @@ public class VentasDao {
         PreparedStatement stmt = null;
         Cliente cliente = venta.getCliente();
         Productos producto = venta.getProductos();
-        
+        ProductoDao productoDao = new ProductoDao();
+        ClienteDao clienteDao = new ClienteDao();
+
         //obtener los valores anteriores de la venta
         Ventas ventaAnt = encontrar(venta);
-        
+
         //obtener la diferencia de cantidad de las ventas, para actualizar la cantidad de producto
         int difCant = ventaAnt.getCantidad() - venta.getCantidad();
-        
-        
+
         //voy a buscar el prducto para obtener su precio
         Productos producto2 = new ProductoDao().encontrar(producto);
         venta.setPrecioProd(producto2.getPrecio());
         venta.setTotalVenta(producto2.getPrecio() * venta.getCantidad());
-        
+
         //obtener la diferencia de dinero para actulizar el saldo del usuario.
-        double difTotal = ventaAnt.getTotalVenta()- venta.getTotalVenta();
+        double difTotal = ventaAnt.getTotalVenta() - venta.getTotalVenta();
 
         //valido que exista la cantidad de producto solicitada
-        if (venta.getCantidad() > producto2.getCantidad()+difCant) {
-            return "Solamente tenemos " + (producto2.getCantidad()-difCant) + " " + producto2.getProducto() + " Disponibles.";
+        if (venta.getCantidad() > producto2.getCantidad() + difCant) {
+            return "Solamente tenemos " + (producto2.getCantidad() - difCant) + " " + producto2.getProducto() + " Disponibles.";
         }
-        
+
         //Buscar un cliente para obtener su saldo
         Cliente cliente2 = new ClienteDao().encontrar(cliente);
         //validar que el cliente tenga los fondos suficientes.
-        if(cliente2.getSaldo()+difTotal < venta.getTotalVenta()+difTotal){
-            return "El saldo del cliente no es suficiente para realizar la venta. Solamente posee: $"+(cliente.getSaldo()+difTotal);
+        if (cliente2.getSaldo() + difTotal < venta.getTotalVenta() + difTotal) {
+            return "El saldo del cliente no es suficiente para realizar la venta. Solamente posee: $" + (cliente.getSaldo() + difTotal);
         }
         //Realizamos el procedimiento
         try {
             conn = Conexion.conectarse();
             stmt = conn.prepareStatement(SQL_UPDATE);
-            
+
             stmt.setInt(1, cliente.getIdCliente());
             stmt.setInt(2, producto.getIdProducto());
             stmt.setInt(3, venta.getCantidad());
             stmt.setDouble(4, venta.getPrecioProd());
             stmt.setDouble(5, venta.getTotalVenta());
             stmt.setInt(6, venta.getIdVenta());
-            
+
             stmt.execute();
 
-            //Actualizar el saldo del cliente
-            
-            //Actualizar la cantidad de producto
+            //descontar la cantidad de productos 
+            producto2.setCantidad(producto2.getCantidad() + difCant);
+            productoDao.modificarProducto(producto2);
+
+            //descontar al cliente el Total de la venta
+            cliente2.setSaldo(cliente2.getSaldo() + difTotal);
+            clienteDao.actualizarCliente(cliente2);
             return null;
         } catch (SQLException ex) {
             return ex.getMessage();
-        }finally {
+        } finally {
             Conexion.close(stmt);
             Conexion.close(conn);
         }

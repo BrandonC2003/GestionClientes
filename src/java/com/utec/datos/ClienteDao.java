@@ -1,8 +1,6 @@
 package com.utec.datos;
 
 import com.utec.modelo.Cliente;
-import com.utec.modelo.Productos;
-import com.utec.modelo.Ventas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,7 +38,7 @@ public class ClienteDao {
                 String apellido = rs.getString("Apellido");
                 String email = rs.getString("Email");
                 String telefono = rs.getString("Telefono");
-                float saldo = rs.getFloat("Saldo");
+                double saldo = rs.getDouble("Saldo");
 
                 cliente = new Cliente(idCliente, nombre, apellido, email, telefono, saldo);
                 clientes.add(cliente);
@@ -72,7 +70,7 @@ public class ClienteDao {
             String apellido = rs.getString("Apellido");
             String email = rs.getString("Email");
             String telefono = rs.getString("Telefono");
-            float saldo = rs.getFloat("Saldo");
+            double saldo = rs.getDouble("Saldo");
 
             cliente.setNombres(nombre);
             cliente.setApellidos(apellido);
@@ -93,18 +91,16 @@ public class ClienteDao {
     public String insertarCliente(Cliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;
-        Cliente clientes = cliente.getCliente();
 
        
         try {
             conn = Conexion.conectarse();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setInt(1, clientes.getIdCliente());
-            stmt.setString(2, clientes.getNombres());
-            stmt.setString(3, clientes.getApellidos());
-            stmt.setString(4, clientes.getEmail());
-            stmt.setString(5, clientes.getTelefono());
-            stmt.setFloat(6, clientes.getSaldo());
+            stmt.setString(1, cliente.getNombres());
+            stmt.setString(2, cliente.getApellidos());
+            stmt.setString(3, cliente.getEmail());
+            stmt.setString(4, cliente.getTelefono());
+            stmt.setDouble(5, cliente.getSaldo());
             stmt.execute();
 
             return null;
@@ -119,18 +115,19 @@ public class ClienteDao {
     public String actualizarCliente(Cliente cliente) {
         Connection conn = null;
         PreparedStatement stmt = null;
-        Cliente clientes = cliente.getCliente();
 
        
         try {
             conn = Conexion.conectarse();
-            stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setInt(1, clientes.getIdCliente());
-            stmt.setString(2, clientes.getNombres());
-            stmt.setString(3, clientes.getApellidos());
-            stmt.setString(4, clientes.getEmail());
-            stmt.setString(5, clientes.getTelefono());
-            stmt.setFloat(6, clientes.getSaldo());
+            stmt = conn.prepareStatement(SQL_UPDATE);
+            
+            stmt.setString(1, cliente.getNombres());
+            stmt.setString(2, cliente.getApellidos());
+            stmt.setString(3, cliente.getEmail());
+            stmt.setString(4, cliente.getTelefono());
+            stmt.setDouble(5, cliente.getSaldo());
+            stmt.setInt(6, cliente.getIdCliente());
+            
             stmt.execute();
             
 
